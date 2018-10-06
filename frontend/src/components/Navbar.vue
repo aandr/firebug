@@ -32,7 +32,6 @@
 
 <style>
 .navbar {
-  margin-bottom: 2rem;
   border-bottom: 1px solid #ccc
 }
 </style>

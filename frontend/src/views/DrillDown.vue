@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container main">
     <h1 class="is-size-2"> Device Drilldown </h1>
     <div v-for="device in devices" :key="device.id"> 
       <h3>{{ device.name }}</h3>
@@ -23,3 +23,7 @@ export default {
   }
 }
 </script>
+<style>
+.container.main {
+  margin-top: 2rem;
+}

@@ -7,9 +7,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     devices: [
-      {'id': '200040001047373333353132', 'name': 'Sensor 1', lat: 123, lon: 120 },
-      {'id': '35005c000d51363034323832', 'name': 'Sensor 2', lat: 123.5, lon: 120.5 },
-      {'id': '2d0049000d51363034323832', 'name': 'Sensor 3', lat: 123.75, lon: 120.75 }
+      { 'id': '200040001047373333353132', 'name': 'Sensor 1', lat: 37.3863, lng: -122.0769 },
+      {'id': '35005c000d51363034323832', 'name': 'Sensor 2',  lat: 37.3763, lng: -122.0669 },
+      {'id': '2d0049000d51363034323832', 'name': 'Sensor 3',  lat: 37.3963, lng: -122.0569 }
     ],
     ts: [],
     currentTime: 0,
