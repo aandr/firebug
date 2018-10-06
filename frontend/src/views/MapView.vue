@@ -1,29 +1,40 @@
 <template>
   <div>
-    <l-map ref="map" :zoom=13 :center="[37.3863, -122.0669]" style="width: 100%; height: 80%">
-      <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-marker 
+    <GmapMap :center="{lat:37.3863, lng:-122.0669}"
+        :zoom="15"
+        map-type-id="terrain"
+        style="width: 100%; height: 800px"
+        :options="{disableDefaultUI: true}"
+        
+    >
+      <GmapMarker 
         v-for="device in devices"
         :key="device.id"
-        :lat-lng="[device.lat, device.lon]" />
-    </l-map>
+        :position="{lat: device.lat, lng: device.lng}"
+        :options="google && {
+           icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            strokeWeight: 7,
+            scale: 10,
+            strokeColor: 'red'
+          },
+        }"
+        />
+    </GmapMap>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+import {gmapApi} from 'vue2-google-maps'
 
 export default {
-  components: { LMap, LTileLayer, LMarker },
   data() {
     return {
-      url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
-      attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    };
+    }
   },
   computed: {
+    google: gmapApi,
     ...mapState(["devices"])
   }
 };
