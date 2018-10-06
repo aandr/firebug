@@ -3,6 +3,11 @@ import datetime
 import six
 import typing
 
+def clean_data(data):
+    """Takes in df column and returns a list of cleaned data (rolling mean window of WINDOW)"""
+    WINDOW = 40
+    return data.rolling(window=WINDOW).mean().values.tolist()
+
 
 def _deserialize(data, klass):
     """Deserializes dict, list, str into an object.
