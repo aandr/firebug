@@ -3,6 +3,7 @@ import 'buefy/dist/buefy.css';
 import Chart from 'chart.js';
 import Vue from 'vue';
 import VueChartkick from 'vue-chartkick';
+import VueSlideBar from 'vue-slide-bar';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import App from './App.vue';
 import Navbar from './components/Navbar.vue';
@@ -18,6 +19,8 @@ Vue.use(VueGoogleMaps, {
   installComponents: true,
 })
 
+
+Vue.component('vue-slide-bar', VueSlideBar)
 Vue.config.productionTip = false
 Vue.use(Buefy)
 Vue.use(VueChartkick, {adapter: Chart})

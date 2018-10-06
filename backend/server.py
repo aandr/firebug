@@ -27,7 +27,7 @@ def csv():
   def generate():
     with db_conn() as conn:
       with conn.cursor() as cur:
-        res = cur.execute("SELECT timestamp, device, ratio, concentation FROM events ORDER BY timestamp DESC")
+        res = cur.execute("SELECT timestamp, device, ratio, concentation FROM events ORDER BY timestamp ASC")
         yield "timestamp,device,ratio,concentration\n"
         for rec in cur:
           yield "{},{},{},{}\n".format(*rec)
