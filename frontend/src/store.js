@@ -57,13 +57,12 @@ export default new Vuex.Store({
   actions: {
     loadAll({commit}) {
       axios.get("http://fbug-data.herokuapp.com/firebug/get_all_devices")
-        .then(result => result.json())
-        .then(result => {
+        .then(({data}) => {
           const devices = {}
           let minTime = new Date('2030-1-1')
           let maxTime = new Date(0)
 
-          result.forEach(device => {
+          data['devices'].forEach(device => {
             const ts = device['time_series']['timelist'].map(n => new Date(n))
             minTime = minTime > ts[0] ? ts[0] : minTime
             maxTime = maxTime < ts[ts.length - 1] ? ts[ts.length - 1] : maxTime
