@@ -1,9 +1,11 @@
 import json, os
 from datetime import datetime
 from flask import Flask, request, Response
+from flask_cors import CORS
 import psycopg2
 
 app = Flask(__name__)
+CORS(app)
 
 def db_conn():
   return psycopg2.connect(os.environ['DB_PATH'])

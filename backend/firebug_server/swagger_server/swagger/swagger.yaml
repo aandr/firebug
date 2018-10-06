@@ -4,7 +4,7 @@ info:
   description: "API for retrieving device data"
   version: "1.0.0"
   title: "FireBug API"
-host: "localhost:8080"
+host: "fbug-data.herokuapp.com"
 basePath: "/firebug"
 schemes:
 - "https"
