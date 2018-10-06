@@ -1,0 +1,116 @@
+---
+swagger: "2.0"
+info:
+  description: "API for retrieving device data"
+  version: "1.0.0"
+  title: "FireBug API"
+host: "localhost:8080"
+basePath: "/firebug"
+schemes:
+- "https"
+paths:
+  /get_data/{device_number}:
+    get:
+      summary: "Get an object of sensor data"
+      description: "Returns a Device object"
+      operationId: "get_data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "device_number"
+        in: "path"
+        description: "the device_number of the device you want to get data for"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Device"
+      x-swagger-router-controller: "swagger_server.controllers.default_controller"
+definitions:
+  GeoLocation:
+    type: "object"
+    required:
+    - "lat_direction"
+    - "latitude"
+    - "lon_direction"
+    - "longitude"
+    properties:
+      latitude:
+        type: "number"
+        description: "latitude of the object"
+      lat_direction:
+        type: "string"
+        description: "N or S"
+      longitude:
+        type: "number"
+        description: "longitude of the object"
+      lon_direction:
+        type: "string"
+        description: "E or W"
+    example:
+      latitude: 6.02745618307040320615897144307382404804229736328125
+      lat_direction: "lat_direction"
+      lon_direction: "lon_direction"
+      longitude: 1.46581298050294517310021547018550336360931396484375
+  TimeSeries:
+    type: "object"
+    required:
+    - "timelist"
+    properties:
+      timelist:
+        type: "array"
+        items:
+          type: "string"
+          description: "Time in YYYY-MM-DD HH:MM:SS.f"
+    example:
+      timelist:
+      - "timelist"
+      - "timelist"
+  ConcentrationSeries:
+    type: "object"
+    required:
+    - "concentrationlist"
+    properties:
+      concentrationlist:
+        type: "array"
+        items:
+          type: "number"
+          description: "Concentration data from the sensor"
+    example:
+      concentrationlist:
+      - 5.962133916683182377482808078639209270477294921875
+      - 5.962133916683182377482808078639209270477294921875
+  Device:
+    type: "object"
+    required:
+    - "concentration_series"
+    - "device_number"
+    - "geolocation"
+    - "time_series"
+    properties:
+      device_number:
+        type: "integer"
+        description: "device number 1, 2, or 3"
+      geolocation:
+        $ref: "#/definitions/GeoLocation"
+      time_series:
+        $ref: "#/definitions/TimeSeries"
+      concentration_series:
+        $ref: "#/definitions/ConcentrationSeries"
+    example:
+      time_series:
+        timelist:
+        - "timelist"
+        - "timelist"
+      device_number: 0
+      concentration_series:
+        concentrationlist:
+        - 5.962133916683182377482808078639209270477294921875
+        - 5.962133916683182377482808078639209270477294921875
+      geolocation:
+        latitude: 6.02745618307040320615897144307382404804229736328125
+        lat_direction: "lat_direction"
+        lon_direction: "lon_direction"
+        longitude: 1.46581298050294517310021547018550336360931396484375
