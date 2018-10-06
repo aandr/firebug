@@ -6,11 +6,23 @@ from flask import json
 from six import BytesIO
 
 from swagger_server.models.device import Device  # noqa: E501
+from swagger_server.models.devices import Devices  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
 class TestDefaultController(BaseTestCase):
     """DefaultController integration test stubs"""
+
+    def test_get_all_devices(self):
+        """Test case for get_all_devices
+
+        Get all of the devices
+        """
+        response = self.client.open(
+            '/firebug/get_all_devices',
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
 
     def test_get_data(self):
         """Test case for get_data
