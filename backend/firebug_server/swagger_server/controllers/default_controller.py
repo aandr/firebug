@@ -15,6 +15,8 @@ SENSOR_2_ID = "35005c000d51363034323832"
 SENSOR_3_ID = "2d0049000d51363034323832"
 
 sensor_id = {'1': SENSOR_1_ID, '2': SENSOR_2_ID, '3': SENSOR_3_ID}
+sensor_lat = {'1': 37.3861254, '2': 37.3861345, '3': 37.3861505}
+sensor_lon = {'1': -122.0666614, '2': -122.0666600, '3': -122.0666678}
 
 def get_all_devices():  # noqa: E501
     """Get all of the devices
@@ -38,12 +40,12 @@ def get_all_devices():  # noqa: E501
         no_na = pd.concat([concentrations, time], axis=1).dropna()
         concentrations = no_na.concentration
         time = no_na.timestamp
-        
+
         # concentrations = df[df.device == sensor_id[str(device_number)]].concentration.values.tolist()
         anomaly_scores = util.calculate_anomalies(concentrations)
 
         # build response objects
-        geolocation = GeoLocation(37.3863, 'N', 122.0669, 'W')
+        geolocation = GeoLocation(sensor_lat[str(device_number)], 'N', sensor_lon[str(device_number)], 'W')
         time_series = TimeSeries(time.values.tolist())
         concentration_series = ConcentrationSeries(concentrations.values.tolist())
         anomaly_score_series = AnomalyScoreSeries(anomaly_scores.values.tolist())
