@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.anomaly_score_series import AnomalyScoreSeries  # noqa: F401,E501
 from swagger_server.models.concentration_series import ConcentrationSeries  # noqa: F401,E501
 from swagger_server.models.geo_location import GeoLocation  # noqa: F401,E501
 from swagger_server.models.time_series import TimeSeries  # noqa: F401,E501
@@ -18,7 +19,7 @@ class Device(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, device_number: int=None, geolocation: GeoLocation=None, time_series: TimeSeries=None, concentration_series: ConcentrationSeries=None):  # noqa: E501
+    def __init__(self, device_number: int=None, geolocation: GeoLocation=None, time_series: TimeSeries=None, concentration_series: ConcentrationSeries=None, anomaly_score_series: AnomalyScoreSeries=None):  # noqa: E501
         """Device - a model defined in Swagger
 
         :param device_number: The device_number of this Device.  # noqa: E501
@@ -29,25 +30,30 @@ class Device(Model):
         :type time_series: TimeSeries
         :param concentration_series: The concentration_series of this Device.  # noqa: E501
         :type concentration_series: ConcentrationSeries
+        :param anomaly_score_series: The anomaly_score_series of this Device.  # noqa: E501
+        :type anomaly_score_series: AnomalyScoreSeries
         """
         self.swagger_types = {
             'device_number': int,
             'geolocation': GeoLocation,
             'time_series': TimeSeries,
-            'concentration_series': ConcentrationSeries
+            'concentration_series': ConcentrationSeries,
+            'anomaly_score_series': AnomalyScoreSeries
         }
 
         self.attribute_map = {
             'device_number': 'device_number',
             'geolocation': 'geolocation',
             'time_series': 'time_series',
-            'concentration_series': 'concentration_series'
+            'concentration_series': 'concentration_series',
+            'anomaly_score_series': 'anomaly_score_series'
         }
 
         self._device_number = device_number
         self._geolocation = geolocation
         self._time_series = time_series
         self._concentration_series = concentration_series
+        self._anomaly_score_series = anomaly_score_series
 
     @classmethod
     def from_dict(cls, dikt) -> 'Device':
@@ -153,3 +159,26 @@ class Device(Model):
             raise ValueError("Invalid value for `concentration_series`, must not be `None`")  # noqa: E501
 
         self._concentration_series = concentration_series
+
+    @property
+    def anomaly_score_series(self) -> AnomalyScoreSeries:
+        """Gets the anomaly_score_series of this Device.
+
+
+        :return: The anomaly_score_series of this Device.
+        :rtype: AnomalyScoreSeries
+        """
+        return self._anomaly_score_series
+
+    @anomaly_score_series.setter
+    def anomaly_score_series(self, anomaly_score_series: AnomalyScoreSeries):
+        """Sets the anomaly_score_series of this Device.
+
+
+        :param anomaly_score_series: The anomaly_score_series of this Device.
+        :type anomaly_score_series: AnomalyScoreSeries
+        """
+        if anomaly_score_series is None:
+            raise ValueError("Invalid value for `anomaly_score_series`, must not be `None`")  # noqa: E501
+
+        self._anomaly_score_series = anomaly_score_series

@@ -1,12 +1,24 @@
 import datetime
-
+from luminol import anomaly_detector
+import pandas as pd
 import six
 import typing
 
 def clean_data(data):
     """Takes in df column and returns a list of cleaned data (rolling mean window of WINDOW)"""
     WINDOW = 40
-    return data.rolling(window=WINDOW).mean().values.tolist()
+    return data.rolling(window=WINDOW).mean()
+
+def calculate_anomalies(ts):
+    """Takes in a df column of concentrations and returns a list of anomaly scores"""
+    tsd = ts.to_dict()
+
+    detector = anomaly_detector.AnomalyDetector(tsd)
+    score = detector.get_all_scores()
+
+    dfs = pd.DataFrame(score.iteritems())
+
+    return dfs[1]
 
 
 def _deserialize(data, klass):

@@ -7,6 +7,7 @@ from swagger_server.models.concentration_series import ConcentrationSeries  # no
 from swagger_server.models.geo_location import GeoLocation  # noqa: F401,E501
 from swagger_server.models.time_series import TimeSeries  # noqa: F401,E501
 from swagger_server.models.devices import Devices  # noqa: E501
+from swagger_server.models.anomaly_score_series import AnomalyScoreSeries
 from swagger_server import util
 
 SENSOR_1_ID = "200040001047373333353132"
@@ -30,16 +31,24 @@ def get_all_devices():  # noqa: E501
     devices = []
     for device_number in range(1,4):
         # extract data
-        time = df[df.device == sensor_id[str(device_number)]].timestamp.values.tolist()
-        # concentrations = df[df.device == sensor_id[str(device_number)]].concentration.values.tolist()
         concentrations = util.clean_data(df[df.device == sensor_id[str(device_number)]].concentration)
+        time = df[df.device == sensor_id[str(device_number)]].timestamp
+
+        # dropna
+        no_na = pd.concat([concentrations, time], axis=1).dropna()
+        concentrations = no_na.concentration
+        time = no_na.timestamp
+        
+        # concentrations = df[df.device == sensor_id[str(device_number)]].concentration.values.tolist()
+        anomaly_scores = util.calculate_anomalies(concentrations)
 
         # build response objects
         geolocation = GeoLocation(37.3863, 'N', 122.0669, 'W')
-        time_series = TimeSeries(time)
-        concentration_series = ConcentrationSeries(concentrations)
+        time_series = TimeSeries(time.values.tolist())
+        concentration_series = ConcentrationSeries(concentrations.values.tolist())
+        anomaly_score_series = AnomalyScoreSeries(anomaly_scores.values.tolist())
 
-        devices.append(Device(device_number, geolocation, time_series, concentration_series))
+        devices.append(Device(device_number, geolocation, time_series, concentration_series, anomaly_score_series))
 
     return Devices(devices)
 
