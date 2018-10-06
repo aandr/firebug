@@ -31,7 +31,8 @@ def get_all_devices():  # noqa: E501
     for device_number in range(1,4):
         # extract data
         time = df[df.device == sensor_id[str(device_number)]].timestamp.values.tolist()
-        concentrations = df[df.device == sensor_id[str(device_number)]].concentration.values.tolist()
+        # concentrations = df[df.device == sensor_id[str(device_number)]].concentration.values.tolist()
+        concentrations = util.clean_data(df[df.device == sensor_id[str(device_number)]].concentration)
 
         # build response objects
         geolocation = GeoLocation(37.3863, 'N', 122.0669, 'W')
@@ -64,3 +65,4 @@ def get_data(device_number):  # noqa: E501
     concentration_series = ConcentrationSeries(concentrations)
 
     return Device(device_number, geolocation, time_series, concentration_series)
+
