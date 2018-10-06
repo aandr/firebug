@@ -28,6 +28,19 @@ paths:
           schema:
             $ref: "#/definitions/Device"
       x-swagger-router-controller: "swagger_server.controllers.default_controller"
+  /get_all_devices:
+    get:
+      summary: "Get all of the devices"
+      description: "Returns an array of Device objects"
+      operationId: "get_all_devices"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Devices"
+      x-swagger-router-controller: "swagger_server.controllers.default_controller"
 definitions:
   GeoLocation:
     type: "object"
@@ -114,3 +127,12 @@ definitions:
         lat_direction: "lat_direction"
         lon_direction: "lon_direction"
         longitude: 1.46581298050294517310021547018550336360931396484375
+  Devices:
+    type: "object"
+    required:
+    - devices
+    properties:
+      devices:
+        type: "array"
+        items:
+          $ref: "#/definitions/Device"
